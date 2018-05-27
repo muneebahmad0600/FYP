@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180413071703) do
+ActiveRecord::Schema.define(version: 20180513085811) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "user_name"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 20180413071703) do
     t.integer "provider_ranking"
     t.string "delivery_start_time"
     t.string "delivery_end_time"
+    t.integer "longitude"
+    t.integer "latitude"
     t.string "delivery_charges"
   end
 
@@ -65,7 +67,11 @@ ActiveRecord::Schema.define(version: 20180413071703) do
     t.string "last_name"
     t.string "user_type"
     t.string "location"
+    t.string "user_name"
+    t.bigint "providers_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["providers_id"], name: "index_users_on_providers_id"
+    t.index ["user_name"], name: "index_users_on_user_name", unique: true
   end
 
 end
