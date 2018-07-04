@@ -17,6 +17,23 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def userlogin
+    
+    if @user = login(user_params[:user_name], user_params[:password])
+    # @user = User.find_by_user_name(user_params[:user_name])
+    # if login_user(user_params[:user_name], user_params[:password])
+    # if @user.present? && User.authenticate(user_params[:user_name], user_params[:password]) 
+    # if @user
+      # render @user, status: :loggedin
+      # format.html { redirect_to @user, notice: 'User was successfully logged in.' }
+      # format.json { render "userlogin", status: :loggedin, location: @user }
+    else
+      render json: {error: "Lol"}, status: 301
+      # format.html { render :new }
+      # format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+  end
+
   # GET /users/1/edit
   def edit
   end
@@ -61,7 +78,7 @@ class UsersController < ApplicationController
     end
   end
 
-  private
+ private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
@@ -69,6 +86,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.permit(:email, :first_name, :last_name, :user_name, :user_type, :location, :password)
+      params.permit(:email, :first_name, :last_name, :user_name, :user_type, :location, :password, :remember_me)
     end
 end

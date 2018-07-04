@@ -1,1 +1,1 @@
-json.array! @providers
+json.array! @provider
