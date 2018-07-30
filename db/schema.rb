@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180611131524) do
+ActiveRecord::Schema.define(version: 20180730085231) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "user_name"
@@ -28,9 +28,26 @@ ActiveRecord::Schema.define(version: 20180611131524) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "ordered_products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer "quantity"
+    t.integer "product_price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "products_id"
+    t.bigint "orders_id"
+    t.index ["orders_id"], name: "index_ordered_products_on_orders_id"
+    t.index ["products_id"], name: "index_ordered_products_on_products_id"
+  end
+
   create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status"
+    t.integer "bill"
+    t.bigint "providers_id"
+    t.bigint "users_id"
+    t.index ["providers_id"], name: "index_orders_on_providers_id"
+    t.index ["users_id"], name: "index_orders_on_users_id"
   end
 
   create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
@@ -42,6 +59,18 @@ ActiveRecord::Schema.define(version: 20180611131524) do
     t.string "product_color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "providers_id"
+    t.index ["providers_id"], name: "index_products_on_providers_id"
+  end
+
+  create_table "provider_products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "providers_id"
+    t.bigint "products_id"
+    t.index ["products_id"], name: "index_provider_products_on_products_id"
+    t.index ["providers_id"], name: "index_provider_products_on_providers_id"
   end
 
   create_table "providers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
